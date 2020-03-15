@@ -1,0 +1,87 @@
+﻿@model T1809E.WAD.ASM102_TrangDM2.Models.Cart
+
+@{
+    ViewBag.Title = "ShowCart";
+}
+<div class="page-header header-filter header-small" data-parallax="true" style="background-image: url('/Content/img/examples/bg2.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto text-center">
+                <h2 class="title">Shopping Cart</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main main-raised">
+    <div class="container">
+        <div class="card card-plain">
+            <div class="card-body">
+                <h3 class="card-title">My Items</h3>
+                <br />
+                <div class="table-responsive" id="cart_items">
+                @if (Model != null)
+                {
+                        <table class="table table-shopping">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th>Product</th>
+                                    <th class="text-right">Price</th>
+                                    <th class="text-right">Qty</th>
+                                    <th class="text-right">Amount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                <tr>
+                                    <td>
+                                        <div class="img-container">
+                                            <img src="@item.Value.Thumbnail" alt="...">
+                                        </div>
+                                    </td>
+                                    <td class="td-name">
+                                        <a href="@Url.Content("~/Products/Details?id="+item.Value.Id)">@item.Value.Name</a>
+                                        <br />
+                                    </td>
+                                    <td class="td-number text-right">
+                                        <small>@item.Value.Price.ToString("C0")</small>
+                                    </td>
+                                    <td class="td-number">
+                                        @item.Value.Quantity
+                                        <div class="btn-group btn-group-sm">
+                                            @if(item.Value.Quantity>1)
+                                            {
+                                                <a class="btn btn-round btn-info" href="@Url.Content("~/Cart/Update?id=" + @item.Value.Id + "&quantity=-1")"> <i class="material-icons">remove</i> </a>
+                                            }
+                                            <a class="btn btn-round btn-info" href="@Url.Content("~/Cart/Update?id=" + @item.Value.Id + "&quantity=1")"> <i class="material-icons">add</i> </a>
+                                        </div>
+                                    </td>
+                                    <td class="td-number">
+                                        <small>@item.Value.TotalItemPrice.ToString("C0")</small>
+                                    </td>
+                                    <td class="td-actions">
+                                        <a href="@Url.Content("~/Cart/Delete?id=" + @item.Value.Id)" rel="tooltip" data-placement="left" title="Remove item" class="btn btn-link">
+                                            <i class="material-icons">close</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        <hr />
+                        <div>
+                            <div class="float-right">
+                                <h4>Bill Total: <strong>@Model.TotalPrice.ToString("C0")</strong></h4>
+                                <button type="button" class="btn btn-info btn-round">Complete Purchase <i class="material-icons">keyboard_arrow_right</i></button>
+                            </div>
+                        </div>
+                }
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+

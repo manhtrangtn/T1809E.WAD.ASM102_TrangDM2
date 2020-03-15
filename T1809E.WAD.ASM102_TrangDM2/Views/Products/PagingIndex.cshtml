@@ -1,0 +1,76 @@
+﻿@using PagedList.Mvc
+@model PagedList.PagedList<T1809E.WAD.ASM102_TrangDM2.Models.Product>
+@{
+    ViewBag.Title = "PagingIndex";
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card card-product card-plain no-shadow" data-colored-shadow="false">
+                <div class="card-header card-header-image">
+                    <a href="Products/Details?id=@item.Id">
+                        <img src="@item.Thumbnail" alt="...">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <a href="#">
+                        <h4 class="card-title">@item.Name</h4>
+                    </a>
+                    <p class="description">
+                        @item.Description
+                    </p>
+                </div>
+                <div class="card-footer justify-content-between">
+                    <div class="price-container">
+                        <span class="price"> @item.Price.ToString("C0")</span>
+                    </div>
+                    <button onclick="AddToCart(@item.Id, 1)" class="btn btn-rose btn-link btn-fab btn-fab-mini btn-round pull-right" rel="tooltip" title="" data-placement="left" data-original-title="Add to cart">
+                        <i class="material-icons">add_shopping_cart</i>
+                    </button>
+                </div>
+            </div>
+            <!-- end card -->
+        </div>
+    }
+    <div class="col-md-12">
+        <div class="col-md-3 ml-auto mr-auto">
+            <ul class="pagination pagination-info">
+                @if (Model.PageNumber > 1)
+                {
+                    <li class="page-item">
+                        <a href="javascript:LoadProduct(@Model.PageNumber-1);" class="page-link"> prev</a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+
+                    if (i == Model.PageNumber)
+                    {
+                        <li class="active page-item">
+                            <a href="javascript:LoadProduct(@i);" class="page-link">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a href="javascript:LoadProduct(@i);" class="page-link">@i</a>
+                        </li>
+                    }
+
+                }
+                @if (Model.PageNumber < Model.PageCount)
+                {
+                    <li class="page-item">
+                        <a href="javascript:LoadProduct(@Model.PageNumber+1);" class="page-link">next </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Content/plugins/google-code-prettify/prettify.js")"></script>
+<script src="@Url.Content("~/Content/plugins/sweetalert/sweetalert.min.js")"></script>
+<script src="@Url.Content("~/Content/js/pages/miscellaneous-sweetalert.js")"></script>
+<script src="@Url.Content("~/Content/js/custom.js?t="+@DateTime.Now)"></script>

@@ -86,8 +86,8 @@ namespace T1809E.WAD.ASM102_TrangDM2.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                  ModelState.AddModelError("", "Login failed, please check your password or email");
+                  return PartialView(model);
             }
         }
 
